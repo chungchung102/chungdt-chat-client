@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChungDT Chat & Music</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center;
+            background-size: cover;
+            z-index: -2;
+            transform: translateZ(-1px) scale(1.5);
+        }
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 8s infinite;
+            opacity: 0.6;
+        }
+        .bubble:nth-child(1) { width: 30px; height: 30px; left: 5%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 50px; height: 50px; left: 25%; animation-delay: 1.5s; }
+        .bubble:nth-child(3) { width: 40px; height: 40px; left: 45%; animation-delay: 3s; }
+        .bubble:nth-child(4) { width: 60px; height: 60px; left: 65%; animation-delay: 4.5s; }
+        .bubble:nth-child(5) { width: 35px; height: 35px; left: 85%; animation-delay: 6s; }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 0.6; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            text-align: center;
+            color: #00aaff;
+            margin-bottom: 30px;
+            font-size: 3em;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounceIn 1.5s ease-in-out;
+        }
+        h2 {
+            color: #00aaff;
+            margin-top: 30px;
+            border-bottom: 3px solid #00ffaa;
+            padding-bottom: 8px;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1s ease-in-out;
+        }
+        h3 {
+            color: #00aaff;
+            margin-top: 15px;
+            font-size: 1.5em;
+        }
+        .section {
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        #chat-box {
+            border: 2px solid #00ffaa;
+            padding: 15px;
+            height: 350px;
+            overflow-y: auto;
+            background-color: #f0faff;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+        #chat-box:hover {
+            border-color: #00cc88;
+        }
+        #chat-box p {
+            margin: 8px 0;
+            padding: 10px;
+            background: #00aaff;
+            color: white;
+            border-radius: 15px;
+            word-wrap: break-word;
+            animation: messageFadeIn 0.5s ease-in-out;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        #message-input {
+            width: 75%;
+            padding: 12px;
+            border: 2px solid #00ffaa;
+            border-radius: 10px;
+            margin-right: 10px;
+            font-size: 1em;
+            background: #fff;
+            transition: border-color 0.3s ease;
+        }
+        #message-input:focus {
+            outline: none;
+            border-color: #00cc88;
+        }
+        #send-button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #00ffaa, #00cc88);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.2s ease;
+        }
+        #send-button:hover {
+            transform: scale(1.05);
+        }
+        #youtube-search {
+            width: 75%;
+            padding: 12px;
+            border: 2px solid #00ffaa;
+            border-radius: 10px;
+            margin-right: 10px;
+            font-size: 1em;
+            background: #fff;
+            transition: border-color 0.3s ease;
+        }
+        #youtube-search:focus {
+            outline: none;
+            border-color: #00cc88;
+        }
+        #video-player {
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        #history-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        #history-list li {
+            padding: 12px;
+            background: linear-gradient(135deg, #00aaff, #0088cc);
+            color: white;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        #history-list li:hover {
+            transform: translateX(5px);
+            background: linear-gradient(135deg, #0088cc, #00aaff);
+        }
+        #challenge-section {
+            margin-top: 20px;
+        }
+        #challenge-input {
+            width: 75%;
+            padding: 12px;
+            border: 2px solid #00ffaa;
+            border-radius: 10px;
+            margin-right: 10px;
+            font-size: 1em;
+            background: #fff;
+            transition: border-color 0.3s ease;
+        }
+        #challenge-input:focus {
+            outline: none;
+            border-color: #00cc88;
+        }
+        #challenge-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        #challenge-list li {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: linear-gradient(135deg, #00ffaa, #00cc88);
+            color: white;
+            margin: 8px 0;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        #challenge-list li:hover {
+            transform: translateX(5px);
+        }
+        #challenge-list input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+        .completed {
+            text-decoration: line-through;
+            color: #b2dfdb;
+        }
+        .challenge-text {
+            flex: 1;
+        }
+        .edit-button, .delete-button {
+            padding: 8px 12px;
+            margin-left: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: transform 0.2s ease;
+        }
+        .edit-button {
+            background: linear-gradient(135deg, #ffeb3b, #fdd835);
+            color: #333;
+        }
+        .delete-button {
+            background: linear-gradient(135deg, #ff5252, #f44336);
+            color: white;
+        }
+        .edit-button:hover, .delete-button:hover {
+            transform: scale(1.05);
+        }
+        button {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #00ffaa, #00cc88);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.2s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        #music-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00aaff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        #music-button:hover {
+            background: #0088cc;
+            transform: scale(1.1);
+        }
+        #music-button i {
+            color: white;
+            font-size: 1.2em;
+        }
+        #start-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        #start-button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            background: #00aaff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #start-button:hover {
+            transform: scale(1.05);
+        }
+        #error-message {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: rgba(255, 82, 82, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 10;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes messageFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            #message-input, #youtube-search, #challenge-input {
+                width: 65%;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2.2em;
+            }
+            h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="start-overlay">
+        <button id="start-button">Bắt đầu Nhạc & Trải nghiệm!</button>
+    </div>
+    <button id="music-button" onclick="toggleBackgroundMusic()" title="Bật/Tắt Nhạc Nền">
+        <i id="music-icon" class="fas fa-volume-up"></i>
+    </button>
+    <div id="error-message"></div>
+    <div class="background-animation">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+    <div class="container">
+        <h1>ChungDT Chat & Music</h1>
+
+        <!-- Chat Section -->
+        <div class="section">
+            <h2>Chat</h2>
+            <div id="chat-box"></div>
+            <div style="display: flex;">
+                <input type="text" id="message-input" placeholder="Nhập tin nhắn...">
+                <button id="send-button"><i class="fas fa-paper-plane"></i> Gửi</button>
+            </div>
+        </div>
+
+        <!-- YouTube Music Player Section -->
+        <div class="section">
+            <h2>Trình phát YouTube</h2>
+            <div style="display: flex;">
+                <input type="text" id="youtube-search" placeholder="Tìm kiếm video YouTube...">
+                <button onclick="searchYouTube()"><i class="fas fa-search"></i> Tìm</button>
+            </div>
+            <div id="video-player"></div>
+            <h3>Lịch sử (Tối đa 5)</h3>
+            <ul id="history-list"></ul>
+        </div>
+
+        <!-- 7-Day Challenge Section -->
+        <div class="section">
+            <h2>Thử thách 7 ngày</h2>
+            <div id="challenge-section">
+                <div style="display: flex;">
+                    <input type="text" id="challenge-input" placeholder="Nhập thử thách mới...">
+                    <button onclick="addChallenge()"><i class="fas fa-plus"></i> Thêm thử thách</button>
+                </div>
+                <ul id="challenge-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+    <script>
+        // Background Music Control
+        const backgroundMusic = document.getElementById('background-music');
+        const musicIcon = document.getElementById('music-icon');
+        const startOverlay = document.getElementById('start-overlay');
+        const startButton = document.getElementById('start-button');
+        let isBackgroundPlaying = false;
+
+        function toggleBackgroundMusic() {
+            console.log('Toggling background music, current state:', isBackgroundPlaying);
+            if (isBackgroundPlaying) {
+                backgroundMusic.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+            } else {
+                backgroundMusic.play().catch(error => {
+                    console.error('Background music play error:', error);
+                    showError('Vui lòng tương tác với trang để bật nhạc nền.');
+                });
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            }
+            isBackgroundPlaying = !isBackgroundPlaying;
+            console.log('New state after toggle:', isBackgroundPlaying);
+        }
+
+        startButton.addEventListener('click', () => {
+            console.log('Start button clicked');
+            toggleBackgroundMusic();
+            startOverlay.style.display = 'none';
+        });
+
+        // YouTube Music Player
+        let searchPlayer;
+        let apiReady = false;
+        let history = JSON.parse(localStorage.getItem('youtubeHistory')) || [];
+
+        function onYouTubeIframeAPIReady() {
+            console.log('YouTube IFrame API ready');
+            apiReady = true;
+            searchPlayer = new YT.Player('video-player', {
+                height: '200',
+                width: '100%',
+                videoId: '',
+                events: {
+                    'onReady': onSearchPlayerReady,
+                    'onError': onSearchPlayerError
+                }
+            });
+        }
+
+        function onSearchPlayerReady(event) {
+            console.log('Search player ready');
+            if (history.length > 0) {
+                const lastVideo = history[0];
+                document.getElementById('youtube-search').value = lastVideo.title;
+                searchPlayer.loadVideoById(lastVideo.videoId);
+                displayHistory();
+            }
+        }
+
+        function onSearchPlayerError(event) {
+            console.error('Search player error:', event.data);
+            showError('Lỗi khi phát video tìm kiếm. Vui lòng thử lại.');
+        }
+
+        async function searchYouTube() {
+            console.log('Searching YouTube...');
+            if (!searchPlayer || !apiReady) {
+                console.error('Search player not ready');
+                showError('Trình phát nhạc chưa sẵn sàng. Vui lòng đợi một lát.');
+                return;
+            }
+            const query = document.getElementById('youtube-search').value;
+            const apiKey = 'AIzaSyChLT1HUMG7rVuaSxYHKd0ynn6pEXI3FWR0';
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${apiKey}`);
+                if (!response.ok) {
+                    throw new Error('Yêu cầu API thất bại: ' + response.statusText);
+                }
+                const data = await response.json();
+                console.log('YouTube search response:', data);
+                if (!data.items || data.items.length === 0) {
+                    showError('Không tìm thấy video nào.');
+                    return;
+                }
+                const videoId = data.items[0]?.id?.videoId;
+                if (videoId) {
+                    searchPlayer.loadVideoById(videoId);
+                    updateHistory({ title: data.items[0].snippet.title, videoId });
+                } else {
+                    showError('ID video không hợp lệ.');
+                }
+            } catch (error) {
+                console.error('YouTube search error:', error);
+                showError('Lỗi khi tìm kiếm YouTube: ' + error.message);
+            }
+        }
+
+        function updateHistory(video) {
+            console.log('Updating history:', video);
+            history = history.filter(v => v.videoId !== video.videoId);
+            history.unshift(video);
+            history = history.slice(0, 5);
+            localStorage.setItem('youtubeHistory', JSON.stringify(history));
+            displayHistory();
+        }
+
+        function displayHistory() {
+            console.log('Displaying history:', history);
+            const historyList = document.getElementById('history-list');
+            historyList.innerHTML = '';
+            history.forEach(video => {
+                const li = document.createElement('li');
+                li.textContent = video.title;
+                li.onclick = () => {
+                    if (searchPlayer) {
+                        document.getElementById('youtube-search').value = video.title;
+                        searchPlayer.loadVideoById(video.videoId);
+                    }
+                };
+                historyList.appendChild(li);
+            });
+        }
+
+        // Error Handling
+        function showError(message) {
+            console.log('Showing error:', message);
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Socket.IO Chat
+        const socket = io('http://localhost:3000'); // Thay bằng URL backend khi triển khai
+        const chatBox = document.getElementById('chat-box');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const username = prompt('Nhập tên của bạn:') || 'Khách';
+
+        socket.on('connect', () => {
+            console.log('Connected to Socket.IO server:', socket.id);
+            showError('Đã kết nối đến server chat!');
+        });
+
+        socket.on('connect_error', (error) => {
+            console.error('Socket.IO connection error:', error);
+            showError('Không thể kết nối đến server chat. Vui lòng kiểm tra lại.');
+        });
+
+        socket.on('message', (data) => {
+            console.log('Received message:', data);
+            let message = document.createElement('p');
+            message.textContent = `[${data.timestamp}] ${data.username}: ${data.message}`;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                const data = {
+                    username: username,
+                    message: message,
+                    timestamp: new Date().toLocaleString('vi-VN')
+                };
+                socket.emit('message', data);
+                messageInput.value = '';
+                console.log('Sent message:', data);
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+
+        // Challenge Management
+        let challenges = JSON.parse(localStorage.getItem('challenges')) || [];
+
+        function loadChallenges() {
+            console.log('Loading challenges:', challenges);
+            const challengeList = document.getElementById('challenge-list');
+            challengeList.innerHTML = '';
+            challenges.forEach((challenge, index) => {
+                const li = document.createElement('li');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = challenge.completed;
+                checkbox.onchange = () => toggleChallenge(index);
+                const text = document.createElement('span');
+                text.className = 'challenge-text';
+                text.textContent = challenge.text;
+                if (challenge.completed) text.classList.add('completed');
+                const editButton = document.createElement('button');
+                editButton.className = 'edit-button';
+                editButton.innerHTML = '<i class="fas fa-edit"></i> Sửa';
+                editButton.onclick = () => editChallenge(index);
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.innerHTML = '<i class="fas fa-trash"></i> Xóa';
+                deleteButton.onclick = () => deleteChallenge(index);
+                li.appendChild(checkbox);
+                li.appendChild(text);
+                li.appendChild(editButton);
+                li.appendChild(deleteButton);
+                challengeList.appendChild(li);
+            });
+        }
+
+        function addChallenge() {
+            const challengeInput = document.getElementById('challenge-input');
+            const text = challengeInput.value.trim();
+            if (text) {
+                challenges.push({ text, completed: false });
+                localStorage.setItem('challenges', JSON.stringify(challenges));
+                challengeInput.value = '';
+                loadChallenges();
+            }
+        }
+
+        function toggleChallenge(index) {
+            challenges[index].completed = !challenges[index].completed;
+            localStorage.setItem('challenges', JSON.stringify(challenges));
+            loadChallenges();
+        }
+
+        function editChallenge(index) {
+            const newText = prompt('Sửa thử thách:', challenges[index].text);
+            if (newText && newText.trim()) {
+                challenges[index].text = newText.trim();
+                localStorage.setItem('challenges', JSON.stringify(challenges));
+                loadChallenges();
+            }
+        }
+
+        function deleteChallenge(index) {
+            if (confirm('Bạn có chắc muốn xóa thử thách này?')) {
+                challenges.splice(index, 1);
+                localStorage.setItem('challenges', JSON.stringify(challenges));
+                loadChallenges();
+            }
+        }
+
+        // Load initial challenges
+        loadChallenges();
+    </script>
+</body>
+</html>
