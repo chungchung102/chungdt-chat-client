@@ -498,7 +498,7 @@
                 return;
             }
             const query = document.getElementById('youtube-search').value;
-            const apiKey = 'AIzaSyChLT1HUMG7rVuaSxYHKd0ynn6pEXI3FWR0';
+            const apiKey = 'AIzaSyDiycauZryABkA9on4T_7Ii1wuACTP6vvU';
             try {
                 const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&key=${apiKey}`);
                 if (!response.ok) {
