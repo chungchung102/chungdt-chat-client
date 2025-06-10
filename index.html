@@ -37,42 +37,42 @@
         }
         /* Dark Mode - Enhanced with Decorative Background */
         body.dark-mode {
-            background-color: #0d0d0d; /* Deep black for dark mode */
-            background-image: linear-gradient(135deg, rgba(10, 25, 47, 0.8), rgba(20, 40, 80, 0.8)); /* Subtle gradient overlay */
-            color: #e8ecef; /* Bright, off-white text for contrast */
+            background-color: #0d0d0d;
+            background-image: linear-gradient(135deg, rgba(10, 25, 47, 0.8), rgba(20, 40, 80, 0.8));
+            color: #e8ecef;
         }
         body.dark-mode::before {
-            background: none; /* Remove pseudo-element background in dark mode */
+            background: none;
             content: '';
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%); /* Subtle glow effect */
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
             z-index: -3;
         }
         body.dark-mode .container {
-            background: rgba(30, 30, 30, 0.95); /* Darker container background */
+            background: rgba(30, 30, 30, 0.95);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
             border: 1px solid #2a2a2a;
         }
         body.dark-mode #chat-box {
-            background-color: #1e1e1e; /* Darker chat box */
+            background-color: #1e1e1e;
             border-color: #00cc88;
             box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
         }
         body.dark-mode #chat-box p {
-            background: linear-gradient(135deg, #0288d1, #0277bd); /* Subtle blue gradient */
-            color: #f5f7fa; /* Bright text for messages */
+            background: linear-gradient(135deg, #0288d1, #0277bd);
+            color: #f5f7fa;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         body.dark-mode #message-input,
         body.dark-mode #youtube-search,
         body.dark-mode #challenge-input,
         body.dark-mode #bg-url {
-            background-color: #252525; /* Darker input fields */
-            color: #e8ecef; /* Bright text */
+            background-color: #252525;
+            color: #e8ecef;
             border-color: #00cc88;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
@@ -85,7 +85,7 @@
         }
         body.dark-mode button,
         body.dark-mode #send-button {
-            background: linear-gradient(135deg, #0288d1, #0277bd); /* Consistent blue gradient */
+            background: linear-gradient(135deg, #0288d1, #0277bd);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             border: 1px solid #01579b;
         }
@@ -95,20 +95,20 @@
             transform: scale(1.05);
         }
         body.dark-mode #history-list li {
-            background: linear-gradient(135deg, #252525, #1e1e1e); /* Darker history items */
+            background: linear-gradient(135deg, #252525, #1e1e1e);
             border: 1px solid #2a2a2a;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            color: #f5f7fa; /* Bright text */
+            color: #f5f7fa;
         }
         body.dark-mode #history-list li:hover {
             background: linear-gradient(135deg, #1e1e1e, #252525);
             transform: translateX(5px);
         }
         body.dark-mode #challenge-list li {
-            background: linear-gradient(135deg, #00cc88, #009966); /* Keep challenge colors */
+            background: linear-gradient(135deg, #00cc88, #009966);
             border: 1px solid #006644;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            color: #f5f7fa; /* Bright text */
+            color: #f5f7fa;
         }
         body.dark-mode #challenge-list li:hover {
             background: linear-gradient(135deg, #009966, #007744);
@@ -116,23 +116,23 @@
         }
         body.dark-mode .edit-button {
             background: linear-gradient(135deg, #ffca28, #ffb300);
-            color: #121212; /* Dark text for contrast */
+            color: #121212;
             border: 1px solid #cc9900;
         }
         body.dark-mode .delete-button {
             background: linear-gradient(135deg, #ff5252, #d32f2f);
             border: 1px solid #b71c1c;
-            color: #f5f7fa; /* Bright text */
+            color: #f5f7fa;
         }
         body.dark-mode .bubble {
-            background: linear-gradient(135deg, rgba(0, 204, 136, 0.3), rgba(2, 136, 209, 0.3)); /* Gradient particles */
+            background: linear-gradient(135deg, rgba(0, 204, 136, 0.3), rgba(2, 136, 209, 0.3));
             box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
             opacity: 0.7;
         }
         body.dark-mode h1,
         body.dark-mode h2,
         body.dark-mode h3 {
-            color: #00ccff; /* Brighter headers for contrast */
+            color: #00ccff;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
         .background-animation {
@@ -157,7 +157,7 @@
         .bubble:nth-child(3) { width: 40px; height: 40px; left: 45%; animation-delay: 3s; }
         .bubble:nth-child(4) { width: 60px; height: 60px; left: 65%; animation-delay: 4.5s; }
         .bubble:nth-child(5) { width: 35px; height: 35px; left: 85%; animation-delay: 6s; }
-        .bubble:nth-child(6) { width: 45px; height: 45px; left: 15%; animation-delay: 2s; } /* Added more particles */
+        .bubble:nth-child(6) { width: 45px; height: 45px; left: 15%; animation-delay: 2s; }
         .bubble:nth-child(7) { width: 55px; height: 55px; left: 35%; animation-delay: 3.5s; }
         .bubble:nth-child(8) { width: 25px; height: 25px; left: 55%; animation-delay: 5s; }
         @keyframes float {
@@ -235,7 +235,10 @@
             box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
             transition: background 0.3s ease, box-shadow 0.3s ease;
         }
-        #message-input {
+        #message-input,
+        #youtube-search,
+        #challenge-input,
+        #bg-url {
             width: 75%;
             padding: 12px;
             border: 2px solid #00ffaa;
@@ -245,9 +248,13 @@
             background: #fff;
             transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        #message-input:focus {
+        #message-input:focus,
+        #youtube-search:focus,
+        #challenge-input:focus,
+        #bg-url:focus {
             outline: none;
             border-color: #00cc88;
+            box-shadow: 0 0 8px rgba(0, 255, 170, 0.6);
         }
         #send-button {
             padding: 12px 20px;
@@ -264,20 +271,6 @@
         }
         #send-button:hover {
             transform: scale(1.05);
-        }
-        #youtube-search {
-            width: 75%;
-            padding: 12px;
-            border: 2px solid #00ffaa;
-            border-radius: 10px;
-            margin-right: 10px;
-            font-size: 1em;
-            background: #fff;
-            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        #youtube-search:focus {
-            outline: none;
-            border-color: #00cc88;
         }
         #video-player {
             margin-top: 15px;
@@ -306,20 +299,6 @@
         }
         #challenge-section {
             margin-top: 20px;
-        }
-        #challenge-input {
-            width: 75%;
-            padding: 12px;
-            border: 2px solid #00ffaa;
-            border-radius: 10px;
-            margin-right: 10px;
-            font-size: 1em;
-            background: #fff;
-            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        #challenge-input:focus {
-            outline: none;
-            border-color: #00cc88;
         }
         #challenge-list {
             list-style: none;
@@ -568,7 +547,7 @@
         // Check backend status
         async function checkBackendStatus() {
             try {
-                const response = await fetch('https://chungdt-back-end.onrender.com/');
+                const response = await fetch('https://chungdt-back-end.onrender.com/', { timeout: 5000 });
                 if (response.ok) {
                     console.log('Backend is running:', await response.text());
                 } else {
@@ -583,6 +562,7 @@
         // Call checkBackendStatus on page load
         window.onload = () => {
             checkBackendStatus();
+            loadChallenges();
         };
 
         // Dark Mode Toggle
@@ -590,19 +570,55 @@
             document.body.classList.toggle('dark-mode');
             const icon = document.getElementById('theme-toggle');
             icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         });
+
+        // Load theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-toggle').textContent = '☀️';
+        }
 
         // Change Background Image
         function changeBackground() {
             const url = document.getElementById('bg-url').value.trim();
-            if (url) {
+            if (!url) {
+                showError('Vui lòng nhập URL hình nền hợp lệ.');
+                return;
+            }
+            // Validate URL format
+            try {
+                new URL(url);
                 document.body.style.backgroundImage = `url('${url}')`;
                 document.body.style.backgroundSize = 'cover';
                 document.body.style.backgroundAttachment = 'fixed';
-                document.body.querySelector('body::before').style.backgroundImage = `url('${url}')`;
-            } else {
-                showError('Vui lòng nhập URL hình nền hợp lệ.');
+
+                let style = document.getElementById('dynamic-bg');
+                if (!style) {
+                    style = document.createElement('style');
+                    style.id = 'dynamic-bg';
+                    document.head.appendChild(style);
+                }
+                style.textContent = `
+                    body::before {
+                        background-image: url('${url}') !important;
+                        background-size: cover !important;
+                        background-attachment: fixed !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center center !important;
+                    }
+                `;
+                localStorage.setItem('backgroundImage', url);
+            } catch (error) {
+                showError('URL hình nền không hợp lệ.');
             }
+        }
+
+        // Load saved background image
+        const savedBackground = localStorage.getItem('backgroundImage');
+        if (savedBackground) {
+            document.getElementById('bg-url').value = savedBackground;
+            changeBackground();
         }
 
         // Background Music Control
@@ -613,7 +629,6 @@
         let isBackgroundPlaying = false;
 
         function toggleBackgroundMusic() {
-            console.log('Toggling background music, current state:', isBackgroundPlaying);
             if (isBackgroundPlaying) {
                 backgroundMusic.pause();
                 musicIcon.classList.remove('fa-volume-up');
@@ -627,14 +642,18 @@
                 musicIcon.classList.add('fa-volume-up');
             }
             isBackgroundPlaying = !isBackgroundPlaying;
-            console.log('New state after toggle:', isBackgroundPlaying);
+            localStorage.setItem('musicState', isBackgroundPlaying ? 'playing' : 'paused');
         }
 
         startButton.addEventListener('click', () => {
-            console.log('Start button clicked');
             toggleBackgroundMusic();
             startOverlay.style.display = 'none';
         });
+
+        // Load music state
+        if (localStorage.getItem('musicState') === 'playing') {
+            toggleBackgroundMusic();
+        }
 
         // YouTube Music Player
         let searchPlayer;
@@ -642,7 +661,6 @@
         let history = JSON.parse(localStorage.getItem('youtubeHistory')) || [];
 
         function onYouTubeIframeAPIReady() {
-            console.log('YouTube IFrame API ready');
             apiReady = true;
             searchPlayer = new YT.Player('video-player', {
                 height: '200',
@@ -656,7 +674,6 @@
         }
 
         function onSearchPlayerReady(event) {
-            console.log('Search player ready');
             if (history.length > 0) {
                 const lastVideo = history[0];
                 document.getElementById('youtube-search').value = lastVideo.title;
@@ -671,9 +688,7 @@
         }
 
         async function searchYouTube() {
-            console.log('Searching YouTube...');
             if (!searchPlayer || !apiReady) {
-                console.error('Search player not ready');
                 showError('Trình phát nhạc chưa sẵn sàng. Vui lòng đợi một lát.');
                 return;
             }
@@ -688,7 +703,6 @@
                     throw new Error(`Yêu cầu API thất bại: ${response.statusText}`);
                 }
                 const data = await response.json();
-                console.log('YouTube search response from backend:', data);
                 if (!data.items || data.items.length === 0) {
                     showError('Không tìm thấy video nào.');
                     return;
@@ -707,7 +721,6 @@
         }
 
         function updateHistory(video) {
-            console.log('Updating history:', video);
             history = history.filter(v => v.videoId !== video.videoId);
             history.unshift(video);
             history = history.slice(0, 5);
@@ -716,7 +729,6 @@
         }
 
         function displayHistory() {
-            console.log('Displaying history:', history);
             const historyList = document.getElementById('history-list');
             historyList.innerHTML = '';
             history.forEach(video => {
@@ -734,7 +746,6 @@
 
         // Error Handling
         function showError(message) {
-            console.log('Showing error:', message);
             const errorDiv = document.getElementById('error-message');
             errorDiv.textContent = message;
             errorDiv.style.display = 'block';
@@ -754,7 +765,6 @@
         const username = prompt('Nhập tên của bạn:') || 'Khách';
 
         socket.on('connect', () => {
-            console.log('Connected to Socket.IO server:', socket.id);
             showError('Đã kết nối đến server chat!');
         });
 
@@ -764,7 +774,6 @@
         });
 
         socket.on('message', (data) => {
-            console.log('Received message:', data);
             let message = document.createElement('p');
             message.textContent = `[${data.timestamp}] ${data.username}: ${data.message}`;
             chatBox.appendChild(message);
@@ -774,6 +783,10 @@
         sendButton.addEventListener('click', () => {
             const message = messageInput.value.trim();
             if (message) {
+                if (message.length > 500) {
+                    showError('Tin nhắn không được vượt quá 500 ký tự.');
+                    return;
+                }
                 const data = {
                     username: username,
                     message: message,
@@ -781,7 +794,8 @@
                 };
                 socket.emit('message', data);
                 messageInput.value = '';
-                console.log('Sent message:', data);
+            } else {
+                showError('Vui lòng nhập tin nhắn.');
             }
         });
 
@@ -795,7 +809,6 @@
         let challenges = JSON.parse(localStorage.getItem('challenges')) || [];
 
         function loadChallenges() {
-            console.log('Loading challenges:', challenges);
             const challengeList = document.getElementById('challenge-list');
             challengeList.innerHTML = '';
             challenges.forEach((challenge, index) => {
@@ -828,10 +841,16 @@
             const challengeInput = document.getElementById('challenge-input');
             const text = challengeInput.value.trim();
             if (text) {
+                if (text.length > 200) {
+                    showError('Thử thách không được vượt quá 200 ký tự.');
+                    return;
+                }
                 challenges.push({ text, completed: false });
                 localStorage.setItem('challenges', JSON.stringify(challenges));
                 challengeInput.value = '';
                 loadChallenges();
+            } else {
+                showError('Vui lòng nhập thử thách.');
             }
         }
 
@@ -844,6 +863,10 @@
         function editChallenge(index) {
             const newText = prompt('Sửa thử thách:', challenges[index].text);
             if (newText && newText.trim()) {
+                if (newText.length > 200) {
+                    showError('Thử thách không được vượt quá 200 ký tự.');
+                    return;
+                }
                 challenges[index].text = newText.trim();
                 localStorage.setItem('challenges', JSON.stringify(challenges));
                 loadChallenges();
@@ -857,9 +880,6 @@
                 loadChallenges();
             }
         }
-
-        // Load initial challenges
-        loadChallenges();
     </script>
 </body>
 </html>
