@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChungDT Chat & Music</title>
+    <title>ChungDT</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -12,7 +12,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Comic Neue', cursive;
+            font-family: 'Comic Neue', Arial, sans-serif;
             background: url('https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3') no-repeat center center fixed;
             background-size: cover;
             color: #333;
@@ -20,6 +20,7 @@
             padding: 20px;
             overflow-x: hidden;
             position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         body::before {
             content: '';
@@ -32,6 +33,107 @@
             background-size: cover;
             z-index: -2;
             transform: translateZ(-1px) scale(1.5);
+            transition: background-image 0.3s ease;
+        }
+        /* Dark Mode - Enhanced with Decorative Background */
+        body.dark-mode {
+            background-color: #0d0d0d; /* Deep black for dark mode */
+            background-image: linear-gradient(135deg, rgba(10, 25, 47, 0.8), rgba(20, 40, 80, 0.8)); /* Subtle gradient overlay */
+            color: #e8ecef; /* Bright, off-white text for contrast */
+        }
+        body.dark-mode::before {
+            background: none; /* Remove pseudo-element background in dark mode */
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%); /* Subtle glow effect */
+            z-index: -3;
+        }
+        body.dark-mode .container {
+            background: rgba(30, 30, 30, 0.95); /* Darker container background */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            border: 1px solid #2a2a2a;
+        }
+        body.dark-mode #chat-box {
+            background-color: #1e1e1e; /* Darker chat box */
+            border-color: #00cc88;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        body.dark-mode #chat-box p {
+            background: linear-gradient(135deg, #0288d1, #0277bd); /* Subtle blue gradient */
+            color: #f5f7fa; /* Bright text for messages */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode #message-input,
+        body.dark-mode #youtube-search,
+        body.dark-mode #challenge-input,
+        body.dark-mode #bg-url {
+            background-color: #252525; /* Darker input fields */
+            color: #e8ecef; /* Bright text */
+            border-color: #00cc88;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode #message-input:focus,
+        body.dark-mode #youtube-search:focus,
+        body.dark-mode #challenge-input:focus,
+        body.dark-mode #bg-url:focus {
+            border-color: #00ffaa;
+            box-shadow: 0 0 8px rgba(0, 255, 170, 0.6);
+        }
+        body.dark-mode button,
+        body.dark-mode #send-button {
+            background: linear-gradient(135deg, #0288d1, #0277bd); /* Consistent blue gradient */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            border: 1px solid #01579b;
+        }
+        body.dark-mode button:hover,
+        body.dark-mode #send-button:hover {
+            background: linear-gradient(135deg, #0277bd, #01579b);
+            transform: scale(1.05);
+        }
+        body.dark-mode #history-list li {
+            background: linear-gradient(135deg, #252525, #1e1e1e); /* Darker history items */
+            border: 1px solid #2a2a2a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #f5f7fa; /* Bright text */
+        }
+        body.dark-mode #history-list li:hover {
+            background: linear-gradient(135deg, #1e1e1e, #252525);
+            transform: translateX(5px);
+        }
+        body.dark-mode #challenge-list li {
+            background: linear-gradient(135deg, #00cc88, #009966); /* Keep challenge colors */
+            border: 1px solid #006644;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #f5f7fa; /* Bright text */
+        }
+        body.dark-mode #challenge-list li:hover {
+            background: linear-gradient(135deg, #009966, #007744);
+            transform: translateX(5px);
+        }
+        body.dark-mode .edit-button {
+            background: linear-gradient(135deg, #ffca28, #ffb300);
+            color: #121212; /* Dark text for contrast */
+            border: 1px solid #cc9900;
+        }
+        body.dark-mode .delete-button {
+            background: linear-gradient(135deg, #ff5252, #d32f2f);
+            border: 1px solid #b71c1c;
+            color: #f5f7fa; /* Bright text */
+        }
+        body.dark-mode .bubble {
+            background: linear-gradient(135deg, rgba(0, 204, 136, 0.3), rgba(2, 136, 209, 0.3)); /* Gradient particles */
+            box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
+            opacity: 0.7;
+        }
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3 {
+            color: #00ccff; /* Brighter headers for contrast */
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
         .background-animation {
             position: absolute;
@@ -55,10 +157,13 @@
         .bubble:nth-child(3) { width: 40px; height: 40px; left: 45%; animation-delay: 3s; }
         .bubble:nth-child(4) { width: 60px; height: 60px; left: 65%; animation-delay: 4.5s; }
         .bubble:nth-child(5) { width: 35px; height: 35px; left: 85%; animation-delay: 6s; }
+        .bubble:nth-child(6) { width: 45px; height: 45px; left: 15%; animation-delay: 2s; } /* Added more particles */
+        .bubble:nth-child(7) { width: 55px; height: 55px; left: 35%; animation-delay: 3.5s; }
+        .bubble:nth-child(8) { width: 25px; height: 25px; left: 55%; animation-delay: 5s; }
         @keyframes float {
-            0% { transform: translateY(0); opacity: 0.6; }
-            50% { opacity: 0.9; }
-            100% { transform: translateY(-100vh); opacity: 0; }
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+            50% { opacity: 0.9; transform: translateY(-50vh) rotate(180deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
         .container {
             max-width: 1000px;
@@ -69,6 +174,7 @@
             padding: 30px;
             position: relative;
             z-index: 1;
+            transition: background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
         }
         h1 {
             text-align: center;
@@ -113,7 +219,7 @@
             background-color: #f0faff;
             border-radius: 10px;
             margin-bottom: 15px;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
         #chat-box:hover {
             border-color: #00cc88;
@@ -127,6 +233,7 @@
             word-wrap: break-word;
             animation: messageFadeIn 0.5s ease-in-out;
             box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
         #message-input {
             width: 75%;
@@ -136,7 +243,7 @@
             margin-right: 10px;
             font-size: 1em;
             background: #fff;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
         #message-input:focus {
             outline: none;
@@ -153,7 +260,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         #send-button:hover {
             transform: scale(1.05);
@@ -166,7 +273,7 @@
             margin-right: 10px;
             font-size: 1em;
             background: #fff;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
         #youtube-search:focus {
             outline: none;
@@ -177,6 +284,7 @@
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: box-shadow 0.3s ease;
         }
         #history-list {
             list-style: none;
@@ -190,7 +298,7 @@
             margin: 8px 0;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         #history-list li:hover {
             transform: translateX(5px);
@@ -207,7 +315,7 @@
             margin-right: 10px;
             font-size: 1em;
             background: #fff;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
         #challenge-input:focus {
             outline: none;
@@ -226,7 +334,7 @@
             color: white;
             margin: 8px 0;
             border-radius: 10px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         #challenge-list li:hover {
             transform: translateX(5px);
@@ -248,7 +356,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9em;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         .edit-button {
             background: linear-gradient(135deg, #ffeb3b, #fdd835);
@@ -272,7 +380,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         button:hover {
             transform: scale(1.05);
@@ -289,7 +397,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            transition: background 0.3s ease, transform 0.2s ease;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
         }
         #music-button:hover {
             background: #0088cc;
@@ -298,6 +406,25 @@
         #music-button i {
             color: white;
             font-size: 1.2em;
+        }
+        #theme-toggle {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 100;
+            background: #00aaff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        #theme-toggle:hover {
+            background: #0088cc;
+            transform: scale(1.1);
         }
         #start-overlay {
             position: fixed;
@@ -319,7 +446,7 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
         }
         #start-button:hover {
             transform: scale(1.05);
@@ -334,6 +461,7 @@
             border-radius: 10px;
             display: none;
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
         @keyframes bounceIn {
             0% { transform: scale(0.5); opacity: 0; }
@@ -349,7 +477,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @media (max-width: 600px) {
-            #message-input, #youtube-search, #challenge-input {
+            #message-input, #youtube-search, #challenge-input, #bg-url {
                 width: 65%;
             }
             .container {
@@ -376,6 +504,7 @@
     <button id="music-button" onclick="toggleBackgroundMusic()" title="Bật/Tắt Nhạc Nền">
         <i id="music-icon" class="fas fa-volume-up"></i>
     </button>
+    <button id="theme-toggle">🌙</button>
     <div id="error-message"></div>
     <div class="background-animation">
         <div class="bubble"></div>
@@ -383,9 +512,20 @@
         <div class="bubble"></div>
         <div class="bubble"></div>
         <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
     </div>
     <div class="container">
-        <h1>ChungDT Chat & Music</h1>
+        <h1>ChungDT</h1>
+
+        <!-- Background Customization Section -->
+        <div class="section">
+            <h2>Tùy chỉnh giao diện</h2>
+            <label>Chọn URL ảnh nền (anime):</label>
+            <input type="text" id="bg-url" placeholder="Dán URL hình nền...">
+            <button onclick="changeBackground()"><i class="fas fa-image"></i> Đổi nền</button>
+        </div>
 
         <!-- Chat Section -->
         <div class="section">
@@ -444,6 +584,26 @@
         window.onload = () => {
             checkBackendStatus();
         };
+
+        // Dark Mode Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-toggle');
+            icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        // Change Background Image
+        function changeBackground() {
+            const url = document.getElementById('bg-url').value.trim();
+            if (url) {
+                document.body.style.backgroundImage = `url('${url}')`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundAttachment = 'fixed';
+                document.body.querySelector('body::before').style.backgroundImage = `url('${url}')`;
+            } else {
+                showError('Vui lòng nhập URL hình nền hợp lệ.');
+            }
+        }
 
         // Background Music Control
         const backgroundMusic = document.getElementById('background-music');
