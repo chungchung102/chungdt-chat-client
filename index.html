@@ -35,7 +35,6 @@
             transform: translateZ(-1px) scale(1.5);
             transition: background-image 0.3s ease;
         }
-        /* Dark Mode - Enhanced with Decorative Background */
         body.dark-mode {
             background-color: #0d0d0d;
             background-image: linear-gradient(135deg, rgba(10, 25, 47, 0.8), rgba(20, 40, 80, 0.8));
@@ -442,6 +441,62 @@
             z-index: 10;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+        #board {
+            display: grid;
+            grid-template-columns: repeat(15, 30px);
+            grid-gap: 1px;
+            background-color: #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        .cell {
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border: 1px solid #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .cell.x::before {
+            content: 'X';
+            color: red;
+        }
+        .cell.o::before {
+            content: 'O';
+            color: blue;
+        }
+        body.dark-mode #board {
+            background-color: #2a2a2a;
+        }
+        body.dark-mode .cell {
+            background-color: #3a3a3a;
+            border-color: #555;
+        }
+        body.dark-mode .cell.x::before {
+            color: #ff5555;
+        }
+        body.dark-mode .cell.o::before {
+            color: #55aaff;
+        }
+        #game-controls {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        #game-status {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #00aaff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        body.dark-mode #game-status {
+            color: #00ccff;
+        }
         @keyframes bounceIn {
             0% { transform: scale(0.5); opacity: 0; }
             60% { transform: scale(1.2); opacity: 1; }
@@ -467,6 +522,14 @@
             }
             h2 {
                 font-size: 1.6em;
+            }
+            #board {
+                grid-template-columns: repeat(15, 20px);
+            }
+            .cell {
+                width: 20px;
+                height: 20px;
+                font-size: 14px;
             }
         }
     </style>
@@ -539,6 +602,19 @@
                 <ul id="challenge-list"></ul>
             </div>
         </div>
+
+        <!-- Game Room Section -->
+        <div class="section">
+            <h2>Phòng Chơi Game</h2>
+            <div id="game-status">Chào mừng đến với phòng chơi game! Nhấn "Bắt đầu" để tham gia.</div>
+            <button onclick="joinGame()"><i class="fas fa-play"></i> Bắt đầu</button>
+            <div id="board"></div>
+            <div id="game-controls">
+                <button onclick="newGame()"><i class="fas fa-redo"></i> Ván mới</button>
+                <button onclick="resign()"><i class="fas fa-flag"></i> Chịu thua</button>
+                <button onclick="quitGame()"><i class="fas fa-sign-out-alt"></i> Thoát</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
@@ -586,7 +662,6 @@
                 showError('Vui lòng nhập URL hình nền hợp lệ.');
                 return;
             }
-            // Validate URL format
             try {
                 new URL(url);
                 document.body.style.backgroundImage = `url('${url}')`;
@@ -878,6 +953,64 @@
                 challenges.splice(index, 1);
                 localStorage.setItem('challenges', JSON.stringify(challenges));
                 loadChallenges();
+            }
+        }
+
+        // Caro Game Client-Side Logic
+        let playerSymbol = null;
+        let gameActive = false;
+
+        function joinGame() {
+            socket.emit('joinGame', { username });
+            showError('Đang tham gia ván chơi Caro...');
+        }
+
+        function newGame() {
+            socket.emit('newGame');
+            showError('Bắt đầu ván mới!');
+        }
+
+        function resign() {
+            socket.emit('resign');
+            showError('Bạn đã chịu thua.');
+        }
+
+        function quitGame() {
+            socket.emit('quitGame');
+            gameActive = false;
+            document.getElementById('game-status').textContent = 'Chào mừng đến với phòng chơi game! Nhấn "Bắt đầu" để tham gia.';
+            document.getElementById('board').innerHTML = '';
+            showError('Bạn đã thoát ván chơi.');
+        }
+
+        socket.on('gameState', (state) => {
+            gameActive = true;
+            playerSymbol = state.players[socket.id];
+            document.getElementById('game-status').textContent = `Bạn là ${playerSymbol}. ${state.currentTurn === socket.id ? 'Đến lượt bạn' : 'Chờ đối thủ'}`;
+            renderBoard(state.board);
+        });
+
+        socket.on('gameOver', (result) => {
+            gameActive = false;
+            document.getElementById('game-status').textContent = result.winner ? `${result.winner} thắng!` : 'Hòa!';
+            showError(result.winner ? `${result.winner} đã thắng ván chơi!` : 'Ván chơi kết thúc với kết quả hòa!');
+        });
+
+        function renderBoard(board) {
+            const boardDiv = document.getElementById('board');
+            boardDiv.innerHTML = '';
+            for (let i = 0; i < 15; i++) {
+                for (let j = 0; j < 15; j++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    if (board[i][j]) cell.classList.add(board[i][j].toLowerCase());
+                    cell.onclick = () => {
+                        if (gameActive && state.currentTurn === socket.id) {
+                            socket.emit('makeMove', { row: i, col: j });
+                        }
+                    };
+                    boardDiv.appendChild(cell);
+                }
             }
         }
     </script>
