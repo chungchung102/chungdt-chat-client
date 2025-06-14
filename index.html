@@ -987,7 +987,7 @@
             gameActive = true;
             playerSymbol = state.players[socket.id];
             document.getElementById('game-status').textContent = `Bạn là ${playerSymbol}. ${state.currentTurn === socket.id ? 'Đến lượt bạn' : 'Chờ đối thủ'}`;
-            renderBoard(state.board);
+            renderBoard(state);
         });
 
         socket.on('gameOver', (result) => {
@@ -996,9 +996,10 @@
             showError(result.winner ? `${result.winner} đã thắng ván chơi!` : 'Ván chơi kết thúc với kết quả hòa!');
         });
 
-        function renderBoard(board) {
+        function renderBoard(state) {
             const boardDiv = document.getElementById('board');
             boardDiv.innerHTML = '';
+            const board = state.board;
             for (let i = 0; i < 15; i++) {
                 for (let j = 0; j < 15; j++) {
                     const cell = document.createElement('div');
